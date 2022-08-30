@@ -30,8 +30,8 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   /**************************************************************************** */
 
   //! END @TODO1
-  app.get("https://images.unsplash.com/photo-1657214059264-99456d9aae24?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80", async(req, res) => {
-      var accfunction = async function (data:string, callback:Function){
+  app.get("https://upload.wikimedia.org/wikipedia/commons/b/bd/Golden_tabby_and_white_kitten_n01.jpg", async(req, res) => {
+      let accfunction = async function (data:string, callback:Function){
         try{
          var filteredpath = await filterImageFromURL(data);
          callback([filteredpath]);
@@ -40,7 +40,11 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
            console.error(error); } 
       };
       try{
-        var requests = req.query.image_url;
+        //if (req.query && req.query.image_url){
+          //requests = (req.query as any).image_url;
+
+        //}
+        const requests: any = req.query.image_url;
 
         if (!requests){
           return res.status(400).send('image not found');
@@ -55,7 +59,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   // Root Endpoint
   // Displays a simple message to the user
   app.get( "/", async ( req, res ) => {
-    res.send("try GET https://images.unsplash.com/photo-1657214059264-99456d9aae24?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80");
+    res.send("https://upload.wikimedia.org/wikipedia/commons/b/bd/Golden_tabby_and_white_kitten_n01.jpg");
   } );
   
 
