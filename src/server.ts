@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Request,Response, } from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
@@ -30,18 +30,25 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   /**************************************************************************** */
 
   //! END @TODO1
-  app.get("https://upload.wikimedia.org/wikipedia/commons/b/bd/Golden_tabby_and_white_kitten_n01.jpg", async(req, res) => {
+  app.get("/filteredimage", async(req: Request, res:Response) => {
       let accfunction = async function (data:string, callback:Function){
         try{
          var filteredpath = await filterImageFromURL(data);
-         callback([filteredpath]);
+         if(filteredpath===undefined||filteredpath===null){
+          return res.status(400).send("Invalid URL path")
+         }
+         else{
+          return res.status(200).sendFile(filteredpath+ '')
+         }
+         //res.on('finish', () => deleteLocalFiles([filteredpath]));     
+         //callback([filteredpath]);
         }
-         catch(error){
-           console.error(error); } 
+        catch(error){
+          console.error(error); } 
       };
       try{
         //if (req.query && req.query.image_url){
-          //requests = (req.query as any).image_url;
+          //requesting = (req.query as any).image_url;
 
         //}
         const requests: any = req.query.image_url;
@@ -49,7 +56,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
         if (!requests){
           return res.status(400).send('image not found');
         }
-        
+    
         await accfunction(requests, deleteLocalFiles);
         
       } catch(error){
@@ -59,7 +66,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   // Root Endpoint
   // Displays a simple message to the user
   app.get( "/", async ( req, res ) => {
-    res.send("try GET /filteredimage?image_url={{}}");
+    res.send("try GET /filteredimage?image_url=https://commons.wikimedia.org/wiki/Category:Images#/media/File:Bhai_Sant_Singh_ji.jpg ");
   } );
   
 

@@ -49,4 +49,4 @@ Add your own domain name and have it point to the running services (try adding a
 
 Github link: https://www.github.com/jonesjay/udagram-app
 
-Elastic beanstalk endpoint url: http://udagram-jonesjay-dev.us-east-1.elasticbeanstalk.com/
+Elastic beanstalk endpoint url: http://udagram-jonesjay-dev.us-east-1.elasticbeanstalk.com/filteredimage?image_url=https://commons.wikimedia.org/wiki/Category:Images#/media/File:Bhai_Sant_Singh_ji.jpg
